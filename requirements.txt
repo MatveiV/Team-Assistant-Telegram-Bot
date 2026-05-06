@@ -1,0 +1,22 @@
+# Core bot
+pyTelegramBotAPI>=4.18.0
+python-dotenv>=1.0.0
+
+# Haystack 2.x core
+haystack-ai>=2.9.0
+
+# OpenAI client — required by Haystack OpenAI components and RemoteWhisperTranscriber
+openai>=1.30.0
+
+# Haystack integrations
+pinecone-haystack>=2.0.0      # PineconeDocumentStore + PineconeEmbeddingRetriever
+# installs: pinecone-client>=3.0.0
+
+# Audio transcription — OGG (Telegram voice) → MP3 conversion
+# Requires ffmpeg installed on the system: apt install ffmpeg / brew install ffmpeg
+# Windows: download from https://ffmpeg.org/download.html and set FFMPEG_PATH in .env
+pydub>=0.25.1
+audioop-lts>=0.2.1            # Python 3.13+ replacement for removed audioop stdlib module
+
+# Document processing
+docling>=2.0.0                # Docling for PDF/DOCX/etc. parsing
