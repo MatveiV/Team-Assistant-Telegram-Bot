@@ -509,47 +509,47 @@ classDiagram
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'clusterBkg': '#f8fafc', 'clusterBorder': '#94a3b8', 'edgeLabelBackground': '#ffffff'}}}%%
 graph TD
-    subgraph users["👥 Пользователи"]
-        U1[Участник 1\niPhone / Android]
-        U2[Участник 2\nDesktop]
-        U3[Участник N]
+    subgraph users["Пользователи"]
+        U1["Участник 1\niPhone / Android"]
+        U2["Участник 2\nDesktop"]
+        U3["Участник N"]
     end
 
-    subgraph telegram["☁️ Telegram Infrastructure"]
-        TG[Telegram Servers\napi.telegram.org]
+    subgraph telegram["Telegram Infrastructure"]
+        TG["Telegram Servers\napi.telegram.org"]
     end
 
-    subgraph server["🖥️ Сервер / VPS"]
+    subgraph server["Сервер / VPS"]
         direction TB
-        BOT[bot.py\nPython 3.11+]
-        FFMPEG[ffmpeg\nсистемный бинарь]
-        ENV[.env\nПеременные окружения]
-        TMP[/tmp\nВременные аудиофайлы]
+        BOT["bot.py\nPython 3.11+"]
+        FFMPEG["ffmpeg\nсистемный бинарь"]
+        ENV["env\nПеременные окружения"]
+        TMP["tmp\nВременные аудиофайлы"]
         BOT --> FFMPEG
         BOT -.-> ENV
         BOT --> TMP
     end
 
-    subgraph openai_proxy["☁️ proxyapi.ru → OpenAI"]
-        PROXY[api.proxyapi.ru/openai/v1]
-        GPT4[GPT-4o\nChat Completions]
-        WHISPER[Whisper-1\nAudio Transcriptions]
-        EMBED[text-embedding-3-small\nEmbeddings]
+    subgraph openai_proxy["proxyapi.ru → OpenAI"]
+        PROXY["api.proxyapi.ru/openai/v1"]
+        GPT4["GPT-4o\nChat Completions"]
+        WHISPER["Whisper-1\nAudio Transcriptions"]
+        EMBED["text-embedding-3-small\nEmbeddings"]
         PROXY --> GPT4
         PROXY --> WHISPER
         PROXY --> EMBED
     end
 
-    subgraph pinecone_cloud["☁️ Pinecone Serverless\nAWS us-east-1"]
-        PCIDX[Index: team-assistant\nNamespace: chat-history\nDimension: 1536\nMetric: cosine]
+    subgraph pinecone_cloud["Pinecone Serverless\nAWS us-east-1"]
+        PCIDX["Index: team-assistant\nNamespace: chat-history\nDimension: 1536\nMetric: cosine"]
     end
 
     U1 & U2 & U3 -->|HTTPS| TG
-    TG -->|Long polling getUpdates| BOT
-    BOT -->|sendMessage replyTo| TG
+    TG -->|"Long polling getUpdates"| BOT
+    BOT -->|"sendMessage / replyTo"| TG
 
-    BOT -->|embeddings / chat / whisper\nHTTPS| PROXY
-    BOT -->|upsert / query\nHTTPS| PCIDX
+    BOT -->|"embeddings / chat / whisper HTTPS"| PROXY
+    BOT -->|"upsert / query HTTPS"| PCIDX
 
     style server fill:#f0fdf4,stroke:#22c55e,stroke-width:2px
     style telegram fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
