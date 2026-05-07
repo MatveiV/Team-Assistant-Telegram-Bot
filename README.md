@@ -56,7 +56,7 @@ cp .env.example .env
 | `OPENAI_BASE_URL` | — | `https://api.proxyapi.ru/openai/v1` |
 | `OPENAI_API_KEY` | ✅ | API-ключ для proxyapi.ru |
 | `OPENAI_MODEL` | — | Модель генерации (default: `gpt-4o`) |
-| `WHISPER_MODEL` | — | Модель транскрипции (default: `whisper-1`) |
+| `WHISPER_MODEL` | — | Модель транскрибации (default: `whisper-1`) |
 | `EMBEDDING_MODEL` | — | Модель эмбеддингов (default: `text-embedding-3-small`) |
 
 ### 4. Настрой бота в Telegram
@@ -109,7 +109,7 @@ C4Context
 ### C4 Level 2 — Контейнеры
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#64748b', 'secondaryColor': '#f0fdf4', 'tertiaryColor': '#fefce8', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#64748b', 'secondaryColor': '#f0fdf4', 'tertiaryColor': '#fefce8', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12'}}}%%
 C4Container
     title Container Diagram — Team Assistant Bot
 
@@ -155,7 +155,7 @@ C4Container
 ### C4 Level 3 — Компоненты Haystack Pipelines
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#64748b', 'secondaryColor': '#f0fdf4', 'tertiaryColor': '#fefce8'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#64748b', 'secondaryColor': '#f0fdf4', 'tertiaryColor': '#fefce8'}}}%%
 C4Component
     title Component Diagram — Haystack Pipelines
 
@@ -205,7 +205,7 @@ C4Component
 ### UML — Диаграмма последовательности: голосовое сообщение
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
 sequenceDiagram
     autonumber
     actor User as Участник
@@ -235,7 +235,7 @@ sequenceDiagram
 
     Disp->>Pipe: run({sources:[tmp.mp3]})
     Pipe->>Whisper: POST /audio/transcriptions (model=whisper-1)
-    Whisper-->>Pipe: {text: транскрипт}
+    Whisper-->>Pipe: {text: транскрибация}
     Pipe-->>Disp: Document(content=transcript)
 
     Disp->>TG: sendMessage(Транскрипция: ...)
@@ -255,10 +255,10 @@ sequenceDiagram
 
 ---
 
-### UML — Диаграмма последовательности: RAG-запрос (`@team_assistant_text_audio_bot`)
+### UML — Диаграмма последовательности: RAG-запрос (@team_assistant_text_audio_bot)
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
 sequenceDiagram
     autonumber
     actor User as Участник
@@ -296,7 +296,7 @@ sequenceDiagram
 ### UML — Диаграмма последовательности: сессия /start_listen → /stop_listen
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
 sequenceDiagram
     autonumber
     actor Team as Команда
@@ -346,7 +346,7 @@ sequenceDiagram
 ### UML — Диаграмма состояний бота
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'edgeLabelBackground': '#f8fafc', 'tertiaryColor': '#f0fdf4', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'edgeLabelBackground': '#f8fafc', 'tertiaryColor': '#f0fdf4', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12'}}}%%
 stateDiagram-v2
     direction LR
 
@@ -401,7 +401,7 @@ stateDiagram-v2
 ### UML — Диаграмма классов
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'classText': '#1e3a5f'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'classText': '#1e3a5f'}}}%%
 classDiagram
     direction TB
 
@@ -508,7 +508,7 @@ classDiagram
 ### UML — Диаграмма развёртывания
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'clusterBkg': '#f8fafc', 'clusterBorder': '#94a3b8', 'edgeLabelBackground': '#ffffff'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'background': '#F5F5F5', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#3b82f6', 'lineColor': '#475569', 'clusterBkg': '#f8fafc', 'clusterBorder': '#94a3b8', 'edgeLabelBackground': '#ffffff'}}}%%
 graph TD
     subgraph users["Пользователи"]
         U1["Участник 1\niPhone / Android"]
@@ -613,7 +613,7 @@ graph TD
 | AI-оркестрация | Haystack 2.x Pipeline API |
 | Векторная БД | Pinecone Serverless (AWS us-east-1) |
 | Генерация | OpenAI GPT-4o via proxyapi.ru |
-| Транскрипция | OpenAI Whisper-1 via proxyapi.ru |
+| Транскрибация | OpenAI Whisper-1 via proxyapi.ru |
 | Эмбеддинги | text-embedding-3-small (1536d) |
 | Документы | Docling (PDF/DOCX/TXT → Markdown) |
 | Аудио-конвертация | pydub + ffmpeg (OGG → MP3) |
@@ -642,7 +642,7 @@ graph TD
 
 | Симптом | Причина | Решение |
 |---|---|---|
-| Бот не реагирует на `@bot вопрос` | Privacy Mode включён | `/mybots` → Bot Settings → Group Privacy → **Turn off** |
+| Бот не реагирует на `@team_assistant_text_audio_bot [ваш вопрос]` | Privacy Mode включён | `/mybots` → Bot Settings → Group Privacy → **Turn off** |
 | Бот отвечает в личке, но не в группе | Та же причина | То же решение |
 | Бот отвечает на команды (`/help`), но не на `@team_assistant_text_audio_bot` | Privacy Mode включён | То же решение |
 
@@ -654,7 +654,7 @@ graph TD
 1. Написать несколько сообщений в группе — они проиндексируются автоматически
 2. Или запустить сессию `/start_listen` → обсудить тему → `/stop_listen`
 
-### Ошибка при транскрипции аудио
+### Ошибка при транскрибации аудио
 
 ```
 OGG→MP3 conversion failed
