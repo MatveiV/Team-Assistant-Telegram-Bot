@@ -183,6 +183,10 @@ def build_rag_pipeline() -> Pipeline:
     return pipe
 
 
+def build_chat_filter(chat_id: int) -> dict:
+    return {"field": "meta.chat_id", "operator": "==", "value": str(chat_id)}
+
+
 def build_summary_pipeline() -> Pipeline:
     """Summarise a dialogue and produce conclusions/verdict."""
     prompt_template = """
@@ -411,6 +415,7 @@ def _download_and_transcribe(
     author_id = msg.from_user.id if msg.from_user else 0
     author_name = format_author(msg)
     timestamp = datetime.fromtimestamp(msg.date, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    username = get_bot_username()
 
     kind = "голосовое сообщение" if is_voice else "аудиофайл"
 
@@ -489,12 +494,13 @@ def _download_and_transcribe(
                     )
 
         # 8. If caption contains bot mention → answer via RAG
-        if caption and f"@{get_bot_username()}" in caption:
-            question = caption.replace(f"@{get_bot_username()}", "").strip() or transcript
+        if caption and username and re.search(rf"@{re.escape(username)}\b", caption, flags=re.IGNORECASE):
+            question = re.sub(rf"@{re.escape(username)}\b", "", caption, flags=re.IGNORECASE).strip() or transcript
             try:
                 result = rag_pipeline.run(
                     {
                         "text_embedder": {"text": question},
+                        "retriever": {"filters": build_chat_filter(chat_id)},
                         "prompt_builder": {"query": question},
                     }
                 )
@@ -802,12 +808,8 @@ def handle_text(msg: Message):
     text = msg.text or ""
     timestamp = datetime.fromtimestamp(msg.date, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    # 1. Always index into Pinecone (background)
-    threading.Thread(
-        target=index_message,
-        args=(chat_id, author_id, author_name, text, timestamp),
-        daemon=True,
-    ).start()
+    # 1. Always index into Pinecone (synchronous for RAG accuracy)
+    index_message(chat_id, author_id, author_name, text, timestamp)
 
     # 2. If active session — record in memory buffer too
     if is_listening(chat_id):
@@ -831,6 +833,7 @@ def handle_text(msg: Message):
             result = rag_pipeline.run(
                 {
                     "text_embedder": {"text": question},
+                    "retriever": {"filters": build_chat_filter(chat_id)},
                     "prompt_builder": {"query": question},
                 }
             )
