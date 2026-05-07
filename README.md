@@ -14,7 +14,7 @@
 | 🎵 Аудиофайлы | MP3, WAV, M4A, OGG, WebM → Whisper → текст → Pinecone |
 | 🟢 `/start_listen` | Начать активную запись сессии обсуждения |
 | 🔴 `/stop_listen` | Завершить сессию → резюме + вердикт от ИИ |
-| 💬 Упоминание `@team_assistant_text_audio_bot` | RAG-ответ на вопрос по всей истории чата |
+| 💬 Упоминание бота `@team_assistant_text_audio_bot` | RAG-ответ на вопрос по всей истории чата |
 | 📄 Документы | Анализ PDF / DOCX / TXT через Docling |
 | 📊 `/summarise` | Глобальное резюме чата из векторной БД |
 
@@ -255,7 +255,7 @@ sequenceDiagram
 
 ---
 
-### UML — Диаграмма последовательности: RAG-запрос (@упоминание)
+### UML — Диаграмма последовательности: RAG-запрос (`@team_assistant_text_audio_bot`)
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'background': '#ffffff', 'primaryColor': '#dbeafe', 'primaryTextColor': '#1e3a5f', 'primaryBorderColor': '#2563eb', 'lineColor': '#475569', 'signalColor': '#475569', 'signalTextColor': '#1e293b', 'labelBoxBkgColor': '#dbeafe', 'labelBoxBorderColor': '#3b82f6', 'labelTextColor': '#1e3a5f', 'loopTextColor': '#1e3a5f', 'noteBkgColor': '#fefce8', 'noteTextColor': '#713f12', 'noteBorderColor': '#ca8a04', 'activationBkgColor': '#eff6ff', 'activationBorderColor': '#3b82f6', 'sequenceNumberColor': '#ffffff'}}}%%
@@ -269,7 +269,7 @@ sequenceDiagram
     participant PC as Pinecone
     participant GPT as GPT-4o
 
-    User->>TG: @bot Что решили про дедлайн релиза?
+    User->>TG: `@team_assistant_text_audio_bot` Что решили про дедлайн релиза?
     TG->>Disp: Update{text, mention=true}
     Disp->>Disp: _is_bot_mention() = True
     Disp->>TG: sendChatAction(typing)
@@ -383,8 +383,8 @@ stateDiagram-v2
     ActiveSession --> Summarising : /stop_listen
     Summarising --> Idle : Резюме отправлено
 
-    Idle --> Answering : @упоминание бота
-    ActiveSession --> Answering : @упоминание бота
+    Idle --> Answering : @team_assistant_text_audio_bot бота
+    ActiveSession --> Answering : @team_assistant_text_audio_bot бота
     Answering --> Idle : Ответ отправлен (нет сессии)
     Answering --> ActiveSession : Ответ отправлен (сессия активна)
 
@@ -577,7 +577,7 @@ graph TD
 ### Вопрос по истории чата
 
 ```
-@your_bot_name Что решили по поводу дедлайна релиза?
+`@team_assistant_text_audio_bot` Что решили по поводу дедлайна релиза?
 ```
 → Бот находит релевантные фрагменты в Pinecone и отвечает со ссылками на авторов и время.
 
@@ -636,7 +636,7 @@ graph TD
 
 ## Устранение неполадок
 
-### Бот не отвечает на `@упоминание` в группе
+### Бот не отвечает на `@team_assistant_text_audio_bot` в группе
 
 Самая частая причина — включён **Privacy Mode** (включён по умолчанию для всех новых ботов).
 
@@ -644,11 +644,11 @@ graph TD
 |---|---|---|
 | Бот не реагирует на `@bot вопрос` | Privacy Mode включён | `/mybots` → Bot Settings → Group Privacy → **Turn off** |
 | Бот отвечает в личке, но не в группе | Та же причина | То же решение |
-| Бот отвечает на команды (`/help`), но не на `@упоминание` | Privacy Mode включён | То же решение |
+| Бот отвечает на команды (`/help`), но не на `@team_assistant_text_audio_bot` | Privacy Mode включён | То же решение |
 
 После изменения настройки **перезапусти бота** и **удали/добавь его в группу заново** (Telegram кэширует права).
 
-### Бот не видит историю чата при `@упоминании`
+### Бот не видит историю чата при `@team_assistant_text_audio_bot`
 
 Если Pinecone пустой (бот только что добавлен), ответ будет основан на пустом контексте. Нужно:
 1. Написать несколько сообщений в группе — они проиндексируются автоматически
